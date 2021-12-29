@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useRef, useCallback } from "react";
+import useCustomFetch from "./hooks/useCustomFetch";
+import Card from "./components/card";
 
-function App() {
+export default function App() {
+  const [result, setResult] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const { users, hasMore, loading, error } = useCustomFetch(result, pageNumber);
+
+  const observer = useRef();
+  const lastUserElementRef = useCallback(
+    (refNode) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (refNode) observer.current.observe(refNode);
+    },
+    [loading, hasMore]
+  );
+
+  console.log(users);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="cards-wrapper">
+        <h1>Users Card</h1>
+        {users.map((user, index) => {
+          if (users.length === index + 1) {
+            return (
+              <div ref={lastUserElementRef} key={user}>
+                <Card user={user} />
+              </div>
+            );
+          } else {
+            return (
+              <div key={user}>
+                {" "}
+                <Card user={user} />
+              </div>
+            );
+          }
+        })}
+        <div>{loading && "Loading..."}</div>
+        <div>{error && "Error"}</div>
+      </div>
+    </>
   );
 }
-
-export default App;
