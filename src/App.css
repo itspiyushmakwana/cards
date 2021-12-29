@@ -1,3 +1,14 @@
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .cards-wrapper {
   text-align: center;
   height: 800px;
@@ -8,13 +19,13 @@
 
 .cards {
   height: 150px;
-  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  box-shadow: rgb(0 0 0 / 24%) 0 1px 5px;
   background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 750px;
-  margin: 25px;
+  margin: 3%;
+  width: 94%;
 }
 
 .cards-detail {
@@ -26,6 +37,7 @@
 
 .cards-detail img {
   height: 130px;
+  margin-left: 10px;
   margin-right: 20px;
 }
 
@@ -43,4 +55,30 @@
   padding: 5px 0;
   text-align: left;
   margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .cards-wrapper {
+    width: 100%;
+  }
+  .cards-info {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+  }
+  .cards-detail img {
+    height: 110px;
+    margin-right: 10px;
+  }
+  .cards {
+    height: 130px;
+    margin: 6% 3%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .cards-wrapper {
+    width: 100%;
+  }
 }

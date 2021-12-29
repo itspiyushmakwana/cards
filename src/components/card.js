@@ -3,7 +3,7 @@ import "../App.css";
 
 export default function Card(props) {
   const {
-    user: { name, picture, email, phone, location },
+    user: { name, picture, email, phone, dob, location },
   } = props;
 
   return (
@@ -15,7 +15,7 @@ export default function Card(props) {
             {name.first} {name.last}{" "}
           </h2>
           <div className="user-info">
-            <div>
+            <div className="info-main">
               <b>Email:</b>
               {email}
             </div>
@@ -24,7 +24,8 @@ export default function Card(props) {
               {phone}
             </div>
             <div>
-              <b>Company:</b>
+              <b>Age:</b>
+              {dob.age}
             </div>
             <div>
               <b>Address:</b>
